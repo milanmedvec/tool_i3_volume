@@ -4,8 +4,8 @@ Volume up/down/mute helpers for PulseAudio/PipeWire desktops, with optional i3st
 
 ## Commands
 
-- `vup` - increase default sink volume
-- `vdown` - decrease default sink volume
+- `vup [percent]` - increase default sink volume (default: 2%)
+- `vdown [percent]` - decrease default sink volume (default: 2%)
 - `vtoggle` - toggle mute
 - `volume` - interactive terminal volume controller
 
@@ -38,8 +38,10 @@ PREFIX="$HOME/.local" ./install.sh
 ## Usage
 
 ```bash
-vup
-vdown
+vup        # increase by 2%
+vup 10     # increase by 10%
+vdown      # decrease by 2%
+vdown 10   # decrease by 10%
 vtoggle
 volume
 ```

@@ -21,5 +21,13 @@ refresh_i3status() {
     killall -SIGUSR1 i3status 2>/dev/null || true
 }
 
-pactl set-sink-volume @DEFAULT_SINK@ -2%
+volume_step="${1:-2}"
+volume_step="${volume_step%\%}"
+
+if [[ $# -gt 1 || ! "$volume_step" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    printf 'Usage: %s [percent]\n' "${0##*/}" >&2
+    exit 2
+fi
+
+pactl set-sink-volume @DEFAULT_SINK@ "-${volume_step}%"
 refresh_i3status
