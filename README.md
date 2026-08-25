@@ -39,7 +39,7 @@ volume
 
 ## Configuration
 
-- Set `I3STATUS_ADDITIONAL_CMD` to a command that refreshes extra i3status text. If unset, `i3status_additional.sh` is used when available.
+- Set `I3STATUS_ADDITIONAL_CMD` to a command that refreshes extra i3status text. If unset, `i3status-additional` is used when available.
 
 ## Notes
 

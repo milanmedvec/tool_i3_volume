@@ -4,8 +4,8 @@ set -euo pipefail
 refresh_i3status() {
     if [[ -n "${I3STATUS_ADDITIONAL_CMD:-}" ]]; then
         bash -c "$I3STATUS_ADDITIONAL_CMD" || true
-    elif command -v i3status_additional.sh >/dev/null 2>&1; then
-        i3status_additional.sh || true
+    elif command -v i3status-additional >/dev/null 2>&1; then
+        i3status-additional || true
     fi
 
     killall -SIGUSR1 i3status 2>/dev/null || true
