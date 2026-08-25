@@ -1,38 +1,42 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+refresh_i3status() {
+    if [[ -n "${I3STATUS_ADDITIONAL_CMD:-}" ]]; then
+        bash -c "$I3STATUS_ADDITIONAL_CMD" || true
+    elif command -v i3status_additional.sh >/dev/null 2>&1; then
+        i3status_additional.sh || true
+    fi
+
+    killall -SIGUSR1 i3status 2>/dev/null || true
+}
 
 print_volume() {
     echo -ne "\r\033[2KVolume: $(pamixer --get-volume-human)"
 }
 
-# Function to handle when + key is pressed
-plus_script() {
+increase_volume() {
     pactl set-sink-volume @DEFAULT_SINK@ +2%
-    bash $DIR_WORKSPACE/bin/i3status_additional.sh
-    killall -SIGUSR1 i3status
+    refresh_i3status
     print_volume
 }
 
-# Function to handle when - key is pressed
-minus_script() {
+decrease_volume() {
     pactl set-sink-volume @DEFAULT_SINK@ -2%
-    bash $DIR_WORKSPACE/bin/i3status_additional.sh
-    killall -SIGUSR1 i3status
+    refresh_i3status
     print_volume
 }
 
-# Set up trap to handle Ctrl+C and exit gracefully
 trap $'echo -e \'\nExiting...\'; exit 0' SIGINT
 
-# Print static header and initial volume on separate lines
 echo "Volume control: [+] up  [-] down  [Ctrl+C] quit"
 print_volume
 
-# Infinite loop to listen for keys
 while true; do
-    read -n 1 -s key
+    read -r -n 1 -s key
 
     case "$key" in
-        '+') plus_script ;;
-        '-') minus_script ;;
+        '+') increase_volume ;;
+        '-') decrease_volume ;;
     esac
 done

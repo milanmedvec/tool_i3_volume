@@ -1,13 +1,20 @@
 # tool_i3_volume
 
-Standalone extraction from `workspace_archlinux_i3wm`.
+Volume up/down/mute helpers for PulseAudio/PipeWire desktops, with optional i3status refresh.
 
-## Files
+## Commands
 
-- `bin/volume` from workspace `bin/volume`
-- `bin/vup` from workspace `bin/vup`
-- `bin/vdown` from workspace `bin/vdown`
-- `bin/vtoggle` from workspace `bin/vtoggle`
+- `vup` - increase default sink volume
+- `vdown` - decrease default sink volume
+- `vtoggle` - toggle mute
+- `volume` - interactive terminal volume controller
+
+## Dependencies
+
+- bash
+- pactl
+- pamixer
+- i3status (optional)
 
 ## Install
 
@@ -15,5 +22,25 @@ Standalone extraction from `workspace_archlinux_i3wm`.
 ./install.sh
 ```
 
-By default commands from `bin/` are installed to `$HOME/.local/bin`.
-Override with `PREFIX=/path ./install.sh`.
+Install to a custom prefix:
+
+```bash
+PREFIX="$HOME/.local" ./install.sh
+```
+
+## Usage
+
+```bash
+vup
+vdown
+vtoggle
+volume
+```
+
+## Configuration
+
+- Set `I3STATUS_ADDITIONAL_CMD` to a command that refreshes extra i3status text. If unset, `i3status_additional.sh` is used when available.
+
+## Notes
+
+These scripts were extracted from a personal Arch Linux + i3 workspace. Review dependencies and paths before using them on another machine.
