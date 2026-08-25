@@ -1,0 +1,38 @@
+#!/bin/bash
+
+print_volume() {
+    echo -ne "\r\033[2KVolume: $(pamixer --get-volume-human)"
+}
+
+# Function to handle when + key is pressed
+plus_script() {
+    pactl set-sink-volume @DEFAULT_SINK@ +2%
+    bash $DIR_WORKSPACE/bin/i3status_additional.sh
+    killall -SIGUSR1 i3status
+    print_volume
+}
+
+# Function to handle when - key is pressed
+minus_script() {
+    pactl set-sink-volume @DEFAULT_SINK@ -2%
+    bash $DIR_WORKSPACE/bin/i3status_additional.sh
+    killall -SIGUSR1 i3status
+    print_volume
+}
+
+# Set up trap to handle Ctrl+C and exit gracefully
+trap $'echo -e \'\nExiting...\'; exit 0' SIGINT
+
+# Print static header and initial volume on separate lines
+echo "Volume control: [+] up  [-] down  [Ctrl+C] quit"
+print_volume
+
+# Infinite loop to listen for keys
+while true; do
+    read -n 1 -s key
+
+    case "$key" in
+        '+') plus_script ;;
+        '-') minus_script ;;
+    esac
+done

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pactl set-sink-volume @DEFAULT_SINK@ -2%
+bash $DIR_WORKSPACE/bin/i3status_additional.sh
+killall -SIGUSR1 i3status
