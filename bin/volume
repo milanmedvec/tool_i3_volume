@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+need() {
+    command -v "$1" >/dev/null 2>&1 || {
+        printf '%s: missing required command: %s\n' "${0##*/}" "$1" >&2
+        exit 127
+    }
+}
+
+need pactl
+need pamixer
+
+
 refresh_i3status() {
     if [[ -n "${I3STATUS_ADDITIONAL_CMD:-}" ]]; then
         bash -c "$I3STATUS_ADDITIONAL_CMD" || true
