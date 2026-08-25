@@ -1,4 +1,4 @@
-# i3-volume-tools
+# tool_i3_volume
 
 Standalone extraction from `workspace_archlinux_i3wm`.
 
