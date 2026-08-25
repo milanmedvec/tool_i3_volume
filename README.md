@@ -11,10 +11,25 @@ Volume up/down/mute helpers for PulseAudio/PipeWire desktops, with optional i3st
 
 ## Dependencies
 
-- bash
-- pactl
-- pamixer
-- i3status (optional)
+Required commands:
+- `bash`
+- `pactl`
+- `pamixer`
+
+Optional commands:
+- `i3status` - refreshed when available/configured
+
+Check required commands in your shell:
+
+```bash
+need() {
+    command -v "$1" >/dev/null || echo "missing: $1"
+}
+
+for cmd in bash pactl pamixer; do
+    need "$cmd"
+done
+```
 
 ## Install
 
