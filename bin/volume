@@ -19,7 +19,7 @@ refresh_i3status() {
         i3status-additional || true
     fi
 
-    killall -SIGUSR1 i3status 2>/dev/null || true
+    killall -s SIGUSR1 i3status 2>/dev/null || true
 }
 
 print_volume() {
